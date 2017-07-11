@@ -4,27 +4,18 @@
 
 class TaskController {
 
-	public function actionIndex($page)
+	public function actionIndex($page=1)
 	{
 		$taskList = array();
 		$taskList = Task::getTaskList($page);
-	        require_once(ROOT . '/views/task/task.php');
+                $total=Task::getTotalTask();
+                // Создаем объект Pagination - постраничная навигация
+                $pagination = new Pagination($total, $page, Task::SHOW_BY_DEFAULT, 'page-');
+                require_once(ROOT . '/views/task/task.php');
 		return true;
 	}
 
-	public function actionView($id)
-	{   echo $id;
-		if ($id) {
-			$newsItem = News::getNewsItemByID($id);
-
-	//require_once(ROOT . '/views/news/view.php');
-
-/*			echo 'actionView'; */
-		}
-
-		return true;
-
-	}
+	
 
 }
 
